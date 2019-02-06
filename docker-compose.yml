@@ -1,0 +1,21 @@
+#docker build -f Dockerfile.dev .
+#docker run -p 2222:3000 -v /app/node_modules -v $(pwd):/app <docker id>
+version : '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "2222:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
